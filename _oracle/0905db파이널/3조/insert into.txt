@@ -1,0 +1,153 @@
+member:
+insert into member value ('user01', 'pass1234', 'Alice Kim', '010-1234-5678', 1, 0.8);
+insert into member value ('user02', 'pass2345', 'Bob Lee', '010-2345-6789', 2, 0.9);
+insert into member value ('user03', 'pass3456', 'Charlie Park', '010-3456-7890', 3, 1.0);
+insert into member value ('user04', 'pass4567', 'David Choi', '010-4567-8901', 1, 0.8);
+insert into member value ('user05', 'pass5678', 'Eva Jung', '010-5678-9012', 2, 0.9);
+insert into member value ('user06', 'pass6789', 'Frank Kim', '010-6789-0123', 3, 1.0);
+insert into member value ('user07', 'pass7890', 'Grace Lee', '010-7890-1234', 1, 0.8);
+insert into member value ('user08', 'pass8901', 'Henry Choi', '010-8901-2345', 2, 0.9);
+insert into member value ('user09', 'pass9012', 'Ivy Park', '010-9012-3456', 3, 1.0);
+insert into member value ('user10', 'pass0123', 'Jack Kim', '010-0123-4567', 1, 0.8);
+insert into member value ('user11', 'pass1235', 'Karen Lee', '010-1234-5679', 2, 0.9);
+insert into member value ('user12', 'pass2346', 'Leo Park', '010-2345-6780', 3, 1.0);
+insert into member value ('user13', 'pass3457', 'Mia Jung', '010-3456-7891', 1, 0.8);
+insert into member value ('user14', 'pass4568', 'Nathan Choi', '010-4567-8902', 2, 0.9);
+insert into member value ('user15', 'pass5679', 'Olivia Kim', '010-5678-9013', 3, 1.0);
+insert into member value ('user16', 'pass6781', 'Paul Lee', '010-6789-0124', 1, 0.8);
+insert into member value ('user17', 'pass7892', 'Quinn Park', '010-7890-1235', 2, 0.9);
+insert into member value ('user18', 'pass8903', 'Rachel Kim', '010-8901-2346', 3, 1.0);
+insert into member value ('user19', 'pass9013', 'Sam Choi', '010-9012-3457', 1, 0.8);
+insert into member value ('user20', 'pass0124', 'Tina Lee', '010-0123-4568', 2, 0.9);
+
+room:
+insert into room value ('일반관1',1.0,50);
+insert into room value ('일반관2',1.0,50);
+insert into room value ('일반관3',1.0,50);
+insert into room value ('일반관4',1.0,50);
+insert into room value ('일반관5',1.0,50);
+insert into room value ('일반관6',1.0,50);
+insert into room value ('3D관7',1.2,50);
+insert into room value ('3D관8',1.2,50);
+insert into room value ('4D관9',1.5,50);
+insert into room value ('4D관10',1.5,50);
+
+movie:
+insert into movie value (101, '베테랑2', '액션', '120min', 10000);
+insert into movie value (102, '모범운전', '코미디', '90min', 8000);
+insert into movie value (103, '러빙빈센트', '드라마', '150min', 12000);
+insert into movie value (104, '에이리언 로물루스', 'SF', '110min', 10000);
+insert into movie value (105, '파묘','공포' ,'95min', 9000);
+
+ticket:
+insert into ticket value ('T001', 'user01', '베테랑2', '2024-09-06 19:00', '일반관1', 2, '2024-09-06 18:00:00');
+insert into ticket value ('T002', 'user02', '모범운전', '2024-09-06 20:00', '일반관2', 1, '2024-09-06 19:00:00');
+insert into ticket value ('T003', 'user03', '러빙빈센트', '2024-09-06 21:00', '일반관3', 4, '2024-09-06 20:00:00');
+insert into ticket value ('T004', 'user04', '에이리언 로물루스', '2024-09-07 19:00', '일반관4', 3, '2024-09-07 18:00:00');
+insert into ticket value ('T005', 'user05', '파묘', '2024-09-07 20:00', '일반관5', 2, '2024-09-07 19:00:00');
+insert into ticket value ('T006', 'user06', '베테랑2', '2024-09-07 21:00', '일반관6', 1, '2024-09-07 20:00:00');
+insert into ticket value ('T007', 'user07', '모범운전', '2024-09-08 19:00', '3D관7', 2, '2024-09-08 18:00:00');
+insert into ticket value ('T008', 'user08', '러빙빈센트', '2024-09-08 20:00', '3D관8', 1, '2024-09-08 19:00:00');
+insert into ticket value ('T009', 'user09', '에이리언 로물루스', '2024-09-08 21:00', '4D관9', 3, '2024-09-08 20:00:00');
+insert into ticket value ('T010', 'user11', '파묘', '2024-09-07 20:00', '일반관5', 2, '2024-09-07 19:00:00');
+insert into ticket value ('T011', 'user11', '베테랑2', '2024-09-09 20:00', '일반관1', 2, '2024-09-09 19:00:00');
+insert into ticket value ('T012', 'user12', '모범운전', '2024-09-09 21:00', '일반관2', 1, '2024-09-09 20:00:00');
+insert into ticket value ('T013', 'user13', '러빙빈센트', '2024-09-10 19:00', '일반관3', 3, '2024-09-10 18:00:00');
+insert into ticket value ('T014', 'user14', '에이리언 로물루스', '2024-09-10 20:00', '일반관4', 2, '2024-09-10 19:00:00');
+insert into ticket value ('T015', 'user15', '파묘', '2024-09-07 20:00', '일반관5', 2, '2024-09-07 19:00:00');
+insert into ticket value ('T016', 'user16', '베테랑2', '2024-09-11 19:00', '일반관6', 2, '2024-09-11 18:00:00');
+insert into ticket value ('T017', 'user17', '모범운전', '2024-09-11 20:00', '3D관7', 1, '2024-09-11 19:00:00');
+insert into ticket value ('T018', 'user20', '러빙빈센트', '2024-09-11 21:00', '3D관8', 3, '2024-09-11 20:00:00');
+insert into ticket value ('T019', 'user20', '에이리언 로물루스', '2024-09-12 19:00', '4D관9', 2, '2024-09-12 18:00:00');
+insert into ticket value ('T020', 'user20', '러빙빈센트', '2024-09-13 19:00', '4D관9', 2, '2024-09-13 18:00:00');
+
+영화 안 본 사람 : user10, user18, user 19
+중복으로 본 사람 : user11, user20
+
+
+
+review:
+insert into review value ('R001', 'user01', '베테랑2', '재미있는 액션', '베테랑2는 정말 재밌었습니다. 액션 씬이 짜릿했어요!', '2024-09-06 18:30:00', 9,'N');
+insert into review value ('R002', 'user02', '모범운전', '가볍고 유쾌한 코미디', '모범운전은 가벼운 마음으로 볼 수 있는 좋은 코미디 영화입니다.', '2024-09-06 19:30:00', 8,'N');
+insert into review value ('R003', 'user03', '러빙빈센트', '강렬한 드라마', '시각적으로 뛰어난 드라마 영화. 스토리도 감동적이었습니다.', '2024-09-06 20:30:00', 10,'N');
+insert into review value ('R004', 'user04', '에이리언 로물루스', 'SF의 명작', 'SF 장르를 좋아한다면 꼭 봐야 할 영화. 재미와 상상력을 자극합니다.', '2024-09-07 18:30:00', 9,'N');
+insert into review value ('R005', 'user05', '파묘', '재미있는 액션', '최민식님 연기가 너무 인상적입니다.', '2024-09-07 19:30:00', 8,'N');
+insert into review value ('R006', 'user06', '베테랑2', '재미있는 액션', '정말로 액션이 뛰어난 영화입니다. 스토리도 흥미로웠습니다.', '2024-09-07 20:30:00', 9,'N');
+insert into review value ('R007', 'user07', '모범운전', '가벼운 코미디', '코미디 영화로서 가볍게 즐길 수 있었습니다. 유머가 좋았어요.', '2024-09-08 18:30:00', 7,'Y');
+insert into review value ('R008', 'user08', '러빙빈센트', '시각적 아름다움', '화면이 정말 아름다웠고, 스토리도 흥미로웠습니다.', '2024-09-08 19:30:00', 10,'N');
+insert into review value ('R009', 'user09', '에이리언 로물루스', '흥미로운 SF', 'SF 장르를 좋아하는 사람이라면 꼭 봐야 할 영화입니다.', '2024-09-08 20:30:00', 8,'N');
+insert into review value ('R010', 'user10', '파묘', '재미있는 액션', '스토리가 너무 인상적입니다.', '2024-09-07 19:30:00', 8,'N');
+insert into review value ('R011', 'user11', '베테랑2', '액션의 진수', '액션이 뛰어나며, 긴장감 넘치는 영화입니다. 재미있었습니다.', '2024-09-09 19:30:00', 9,'N');
+insert into review value ('R012', 'user12', '모범운전', '가벼운 즐거움', '유쾌한 코미디 영화로 가벼운 마음으로 볼 수 있었습니다.', '2024-09-09 20:30:00', 7,'Y');
+insert into review value ('R013', 'user13', '러빙빈센트', '강렬한 드라마', '감정적으로 깊은 영화였고, 시각적으로도 훌륭했습니다.', '2024-09-10 18:30:00', 10,'N');
+insert into review value ('R014', 'user14', '에이리언 로물루스', '흥미로운 SF', 'SF 장르를 좋아하는 분들께 추천합니다. 상상력이 뛰어난 영화.', '2024-09-10 19:30:00', 8,'N');
+insert into review value ('R015', 'user15', '파묘', '재미있는 액션', '김고은님 연기가 너무 인상적입니다.', '2024-09-07 19:30:00', 8,'N');
+insert into review value ('R016', 'user16', '베테랑2', '액션의 정수', '액션과 스토리가 조화를 이루는 훌륭한 영화입니다.', '2024-09-11 18:30:00', 9,'N');
+insert into review value ('R017', 'user17', '모범운전', '가벼운 유머', '가벼운 마음으로 볼 수 있는 유쾌한 영화입니다.', '2024-09-11 19:30:00', 7,'N');
+insert into review value ('R018', 'user18', '러빙빈센트', '시각적 훌륭', '아름다운 비주얼과 감동적인 스토리. 정말 잘 만든 영화입니다.', '2024-09-11 20:30:00', 10,'Y');
+
+INSERT INTO comment (c_code, id, rv_id, c_text)
+VALUES ('C001', 'user007', 'R001', '전 1편보다 별로였는데...');
+
+-- 댓글 2: 'R002'에 대한 댓글
+INSERT INTO comment (c_code, id, rv_id, c_text)
+VALUES ('C002', 'user008', 'R002', '요즘 시대에 맞지 않는 웃음 코드여서 전 별로였어요.');
+
+-- 댓글 3: 'R003'에 대한 댓글
+INSERT INTO comment (c_code, id, rv_id, c_text)
+VALUES ('C003', 'user009', 'R003', '저도 그렇게 생각합니다.');
+
+-- 댓글 4: 'R004'에 대한 댓글
+INSERT INTO comment (c_code, id, rv_id, c_text)
+VALUES ('C004', 'user010', 'R004', '무서운 영화 싫어하면 보지 마세요. 전 보다 나왔습니다.');
+
+-- 댓글 5: 'R005'에 대한 댓글
+INSERT INTO comment (c_code, id, rv_id, c_text)
+VALUES ('C005', 'user011', 'R005', '유명한 가수라길래 갔는데 너무 촌스러워요.');
+
+
+DELIMITER //
+
+create trigger c_number
+after insert on ticket
+for each row
+begin
+	update room
+	set r_remain = r_remain - new.t_number
+	where r_name = new.r_name;
+end;
+
+delimiter ;
+
+
+
+
+
+
+CREATE TRIGGER c_number
+AFTER INSERT ON ticket
+FOR EACH ROW
+BEGIN
+    -- r_remain이 감소한 값이 0 이하가 되는지 체크
+    DECLARE remaining INT;
+
+    -- 현재 남은 좌석 수를 가져옴
+    SELECT r_remain INTO remaining
+    FROM room
+    WHERE r_name = NEW.r_name;
+
+    -- 남은 좌석 수가 0 이하로 내려가는지 확인
+    IF remaining - NEW.t_number < 0 THEN
+        -- 경고 메시지 발생
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: 남은 좌석수가 부족합니다.';
+    ELSE
+        -- r_remain 값을 감소
+        UPDATE room
+        SET r_remain = r_remain - NEW.t_number
+        WHERE r_name = NEW.r_name;
+    END IF;
+END;
+
+
+

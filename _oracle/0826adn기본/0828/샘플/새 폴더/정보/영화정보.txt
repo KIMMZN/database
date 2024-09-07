@@ -1,0 +1,5 @@
+insert into movie values ('리볼버','2024-08-07','114분',8000);
+insert into movie values ('빅토리','2024-08-14','120분',8000);
+insert into movie values ('애프터썬','2024-08-28','101분',7000);
+insert into movie values ('필사의추격','2024-08-21','109분',9000);
+insert into movie values ('혹성탈출:새로운시대','2024-05-08','145분',11000);

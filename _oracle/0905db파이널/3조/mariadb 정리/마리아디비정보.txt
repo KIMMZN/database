@@ -1,0 +1,9 @@
+MariaDB 설치 : 
+참고 사이트 : https://congsong.tistory.com/62
+프로그램 다운로드 주소 : https://mariadb.org/download/?t=mariadb&p=mariadb&r=11.4.3&os=windows&cpu=x86_64&pkg=msi&mirror=blendbyte
+사용한 maria db 버전 : 11.4.3
+
+DBeaver 설치 :
+참고 사이트 : 
+사용한 dbeaver 버전 : community deition 24.2.0 
+

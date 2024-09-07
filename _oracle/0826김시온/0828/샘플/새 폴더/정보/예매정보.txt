@@ -1,0 +1,11 @@
+('예매번호','아이디','영화명','좌석번호','음료코드',수량,'간식코드',수량,총금액)
+
+insert into ticket values ('N0001','mango','애프터썬','A01','b001',1,'f004',1,14000);
+insert into ticket values ('N0002','mango','애프터썬','A02','b012',1,'f004',1,14500);
+insert into ticket values ('N0003','cherry','필사의추격','A12','b013',1,'f003',2,23500);
+insert into ticket values ('N0004','grapefruit','혹성탈출:새로운시대','A20','b001',1,'f003',1,19500);
+insert into ticket values ('N0005','banana','빅토리','A22','b012',1,'f010',1,15500);
+insert into ticket values ('N0006','banana','빅토리','A23','b001',1,'f003',1,16500);
+
+
+

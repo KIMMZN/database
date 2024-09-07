@@ -1,0 +1,465 @@
+oracle sql (version 11g)
+사용자명 : system
+비밀번호 : 11111111
+
+db: 자료를저장
+     (영구적)
+    
+
+- 관계형데이터베이스
+  (도구) oracle -- 유료
+          mysql
+          maria
+          mssql
+
+
+ex)저장할 자료 ㅡ 고객의 정보
+
+번호 이름  나이 주소 전화번호   성별(추가시)
+-----------------------------
+1    길동이 32 서울   010             
+2    홍길동 65 수원   010
+3    가오가 21 서울   010
+3    박기수 --- > 무결성위배, 번호가 3이 중복
+ : 현재 로우(행): 3, 컬럼(열) : 5
+
+db : 자료를 저장하는곳
+* 자료를 영구적으로 저장하기 위해 관계형데이터베이스를 사용한다.
+
++릴레이션은 테이블
+로우 컬럼으로 이루어져 있다
+컬럼은 속성을 지정할수 있고 제약조건을 걸수있다.
+제약조건은 not null . check, unique
+
+
+(정형데이터)관계형데이터베이스 용어 			 /// 비정형데이터는 빅데이터
+**릴레이션(테이블) ㅡ 전체
+: 행과 열로 만들어 짐.
+  row  colum(속성,제약조건                                 
+  ㅣ 
+   로우 ㅡ> 저장할 대상의 자료
+
+colum, 속성에서
+ :: 더하기 빼기 가능하면 숫자로.
+:: 더하기 빼기 불가능하면 문자로 처리하면 얼추 맞는다.
+
+ colum(속성,제약조건) 
+colcum, 제약조건 :: not null . check . unique
+colcum, 제약조건 : not null ㅡ> 반드시 입력해야한다.
+	           check ㅡ > 여기 있는 값 체크 하겠다. (성별 남녀 체크)
+		unique ㅡ>ex. (번호 중복금지), unique한 컬럼 // colum을 유니크하게 만드는것 그러니 자연스럽게 로우도 유니크해진다.
+
+릴레이션을 만든다는것을 colum을 만든다는것이다.
+
+개념적인 모델링: *테이블을 아직 생성하진 않고 개념적으로 생각만한것
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+테이블 만들기
+번호 이름  나이 주소 
+-----------------------------
+1    길동이 32 서울                
+2    홍길동 65 수원   
+3    가오가 21 서울   
+3    박기수 --- >
+
+Create table 고객의정보 (              			//절때 한글로 하면 안됨.
+번호 number, unique key,		         -- 유니크한 번호로 만듬.
+이름 varchar2(6), not null,                         --not null : must, ---- 한글은 3(2바이트)글자, 영어는 6(1바이트)글자 
+나이 number(2), default 1,                        ------- 디폴트값 1지정. 기본값 1갖고 시작;
+주소, varchar2(50))
+);
+
+-------
+
+SQL> create table aaa(
+  2  no number,
+  3  name varchar2(2)
+  4  );
+
+
+명령어
+create table : 테이블을 만든다
+
+desc : 만들어진 테이블의 구조 확인
+ex) desc aaa;
+
+----
+insert  < ㅡㅡ 로우 추가
+ex) insert into aaa values (1, 'krmtr');
+but// varchar2(2)가 2라서 5글자는 생성불가
+ex) insert into aaa values (1, 'kk');	
+
+select            
+ex) select * from aaa;
+         ㅣ
+          n
+SQL> select * from aaa;
+
+        NO NA
+----------  --
+         1   kk                              -행 추가됨.
+
+
+---------------------------
+**************************
+
+
+SQL> create table member00 (
+  2  empno number(4) unique,
+  3  ename varchar2(10) not null,
+  4  sal number(5) check(sal between 500 and 5000),
+  5  gender varchar2(1) check (gender in ('M', 'F')),
+  6  epoint number(3) default 1);
+
+테이블이 생성되었습니다.
+
+SQL> desc member00;
+ 이름                                      널?      유형
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                              NUMBER(4)
+ ENAME                                     NOT NULL VARCHAR2(10)
+ SAL                                                NUMBER(5)
+ GENDER                                             VARCHAR2(1)
+ EPOINT                                             NUMBER(3)
+
+SQL> insert into member00 values (1, 'hong', 600, 'M', 10);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> insert into member00 values (2, 'lee', 900, 'F', default);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> select * from member00;
+
+     EMPNO ENAME          SAL G     EPOINT
+---------- ---------- ---------- - ----------
+         1 hong              600 M         10
+         2 lee                 900 F           1
+
+----------------------------------------------------
+08-27 (oracle, day 02)
+
+CRUD
+
+C : row insert
+R : ROW SELECT
+u: row update
+d : row delete
+create read update delete
+
+row - crud와 관련이있다.
+column - 속성, 제약조건과 관련이있다,
+
++ 키 : 칼럼에 부여하는 기능
+키의 종류: 기본키, 외래키
+**기본키(primary key): 튜플(row)을 유일하게 식별, 기본키로 index(색인)를 형성하여 저장한다. null 불가하다. ** (유일성, 속도향상,null불가)
+				          ㅡ> 검색속도가 향상
+인덱스를 형성하면 검색속도가 향상.
+
+-------------------------------------------------------
+1번문제) primary key 이용
+member
+이름 주소 전화번호                +id 
+홍길동 서울 1111                    a
+도우너 서울 1111                    b
+홍길동 수원 2222                    c
+---
+
+**튜플을 유일하게 식별할수 있어야만
+갱신 이상 현상과 삭제이상현상을 해결할수 있다.
+
+
+ㅡㅡ> 업데이트할때 갱신이상 현상이 발생할수있다.
+        원인은 ? 튜플을 유일하게 식별할수가 없어서 문제가 생긴다.
+
+ㅡㅡ> delete할때 삭제이상현상이 발생할수 있다.
+         원인은 ? 튜플을 유일하게 식별할수가 없어서 문제가 생긴다.
+
+id를 집어 넣어서 유니크하게 하면 튜플을 유일하게 식별할수 있어서
+문제 해결.
+
+1번문제) 해결
+create table m(
+id varchar(1)       primary key,
+name v(2),
+address v(10),
+phonnum v(13));
+
+----------------------------------------------
+2번) 
+자동차등록
+이름      자동차 넘버    전번
+홍길동    1111            1234
+홍길동    2222            1234
+crud
+
+2) 해결 // 테이블 분리
+자동차등록
+(pk)			    (외래키)
+ id 이름 전번     l           카번호      id
+ a 홍길동 1234  ㅣ             1          a 
+ b 홍      2222  l               2          a
+
+외래키는 pk(기본키)를 참조한다.
+외래키는 카번호가 소유하고있다. (분리된 테이블)
+외래키 : 자식 릴레이션의 외래키는 부모 릴레이션의 특정 컬럼을 참조한다.
+*자식이 참조하는 부모 릴레이션은 무조건 유니크(유일성)해야한다.
+기본키는 테이블당 1개씩만 설정할수있다.
+
+칼럼 to 칼럼
+ㅡ        ㅡ
+외래키   참조대상
+
+
+데이터 설계시
+이상현상을 방지하기 위해서 고려 해야될것
+1) 유일성 (기본키)pk
+2)데이터의 중복 최소화 (정규화,외래키사용)
+정규화 : 테이블 분리
+-----------------------------------------------------
+primary key 활용
+
+member table
+id: 8글자, 기본키,
+name: 한글5글자,
+tel: 13글자
+
+create table member (
+id varchar2(8), primary key,
+name varchar2(10),
+tel number(13)) ;
+
+--------------------------------
+primary key 활용에 외래키 활용
+
+car table
+carnum : 4글자
+id : 8글자, 외래키(참조하는정보-member릴레이션의 id컬럼)
+
+create table car (
+carnum number(4),
+id varchar2(8),
+foreign key(id) references member(id));
+
+//
+create table car (
+carnum number(4),
+id varchar2(8),
+constraint fk_member_id foreign key(id) references member (id)); 
+이렇게 만들어도 된다
+
+foreign key(id)
+//fk_meber_id 자식키에 새로운 이름을 지정해서 관리
+//이름이 없는 위의 커리문은 오라클이 알아서 이름을 지정한다.
+
+-- constraint [fk명] foreign ([fk가 될 칼럼명]) reference [fk로 연결할 pk가 위치한 부모테이블] ([pk칼럼명])
+
+----------------------------------------------
+ 8 5 13
+1.o
+2.o
+3.o
+4.o
+5.o
+6.x ------- 외래키 제약조건을 위배
+
+7. o
+8. o
+
+9. o
+10.  x
+11 o
+
+12. x
+13. o
+14. o
+
+외래키는 칼럼 to 칼럼의 관계이다.
+
+
+//
+//update는 set이 필수
+update sugang set name ~ where 
+update sugang set subcode= 'c04' where userid = 'bbb';
+userid bbb인 로우의 subcode 를 'c04'로
+
+update sugang set subcode = '' where userid = 'aaa' and subcode ='c03';
+
+//delete는 from
+delete from stu where~
+//
+
+--------------------------------------------------------------------------
+08 - 28
+------------------------------------------------------------------------
+
+** ERD  - 개념적 설계** (Entity Relationship Diagram)
+E : 개체 : 독립적존재할수있는대상
+R : 관계 : 1:1 , 1:N, N:M
+
+*ERD (개념적설계) ㅡ> 논리적설계 ㅡ > 물리적설계
+                            (테이블명세서)   (쿼리문)
+
+
+
+( l고객l) ----------------------------<출석> ---------------------------- (l출석대장l)
+ |     |                                     공통점                                        |
+(ID) (NAME)                                                                          (시간)
+
+
+교수는 id 이름.
+교수는 논문을 작성
+논문은 작성일 아이디만저장;
+
+개체 분석
+l교수l                     -------<작성>--------           l논문l
+(아이디^)(이름)                                        (작성일) (아이디)
+하면서 기본키는 표시, ^로 표시함
+
+관계 분석
+
+
+
+시나리오1
+고객관리
+고객은 아이디와 이름, 성별, 포인트로 구성된다.
+아이디는 8글자이며, 중복된 아이디는 사용할 수 없다.
+이름은 한글로 최대 5글자 이며 성별은 남과 여로 저장한다.
+포인트는 최대 9999.99까지 저장할 수 있다.
+
+고객은 출석도장을 찍을 수 있다.
+출석도장은 날짜를 저장한다.
+고객은 하루에 여러번 출석도장을 찍을 수 있다. 
+
+
+( l고객l) l----------------------------<출석> ----------------------------< (l출석시간l)
+ |     |                                     공통점                                        |
+(ID) (NAME)                                                                          (시간)
+
+
+관계 표시1:N  = = 1  ------- 
+o : 버블  : 무조건 아님. 출석해도되고 안해도되고(무조건 출석할 필요없음)
+o 안붙으면 무조건 강제성 (무조건출석)
+
+
+
+시나리오2
+고객관리
+고객은 아이디와 이름, 성별, 포인트로 구성된다.
+아이디는 8글자이며, 중복된 아이디는 사용할 수 없다.
+이름은 한글로 최대 5글자 이며 성별은 남과 여로 저장한다.
+포인트는 최대 9999.99까지 저장할 수 있다.
+
+고객은 이벤트에 참여 할 수 있다. 
+이벤트는 별도의 테이블에 저장한다.
+이벤트 번호는 숫자3개의 조합이다. 
+이벤트 번호와 이벤트 이름과 날짜를 저장한다.
+
+고객만 이벤트에 참여 가능하고
+이벤트는 현재 계획된 이벤트만 신청이 가능하다.
+
+
+<한사람 여러개 이벤트 참여가능
+하나의 이벤트는 여러개의 고객으로 진행>
+
+날짜 : timestamp
+1:n
+n : 1
+n:m
+
+
+'ㅡ'는 실선;
+-----                                                       -------
+l고객l ㅡ>oㅡㅡㅡㅡㅡ<참여>ㅡㅡㅡㅡㅡㅡo<ㅡ l이벤트l
+-----                     |                                 -------
+|                                ㅣ                                  |  
+(id_)|                          (신청사연)                      (이벤트 번호_)  |      
+   (이름)|                                                                 (이벤트 이름)  |
+      (성별)|                                                                         (이벤트날짜)
+           (포인트)
+
+
+
+외래키 제약조건
+set null
+set cascade
+
+//고객
+create table clienta (
+id varchar2(8) primary key,
+name varchar2(10),
+gender varchar2(2) check (gender in ('남', '녀')),
+point number(6,2));
+
+//이벤트
+create table eventa (
+eventnum varchar2(3) primary key,
+eventname varchar2(20),
+eventdate timestamp);
+
+//참여
+create table app (
+appnum varchar2(3) primary key,
+id varchar2(8)
+eventnum varchar2(3)
+appstory varchar2(100),
+constraint fk_client_id foreign key(id) references clienta (id)
+on delete cascade,      //(clienta의 id칼럼이 삭제되면 자식 튜플도 삭제한다) .  부모가 삭제되면 자기자신도 삭제해라.                                 ㅡㅡㅡㅡㅡ
+constraint fk_client_event foreign key(eventnum)  references eventa(eventnum)
+on delete set null	    //(eventa 테이블의 eventnum이라는 칼럼이 삭제되면 자식 릴레이션의 외래키인 eventanum의 값을 null로 설정하겟다); , 부모가 삭제되더라도 자기자신은 null로 설정하겟다.
+
+);
+ 
+
+ex ++)
+---- 외래키 제약조건
+on delete set null,  //부모릴레이션에 참조하고 있는 id가 삭제되면 자식릴레이션 외래키 속성이 null
+on delete cascade//부모릴레이션에 참조하고 있는 scode가 삭제되면 자식릴레이션 튜플도 삭제
+);
+
+----------------------------
+오전실습0828
+------------------------------
+create table e_user(
+id varchar2(8) primary key,
+name varchar2(10),
+gender varchar2(2) check (gender in('남','녀')),
+point number(6,2));
+
+create table event(
+e_num varchar2(3) primary key,
+e_name varchar2(10),
+e_day timestamp);
+
+create table event_join(
+join_num varchar2(3) primary key,
+id varchar2(8),
+e_num varchar2(3),
+message varchar2(10),
+constraint fk_event_join_id foreign key (id) references e_user(id)
+on delete cascade,
+constraint fk_event_join_e_num foreign key (e_num) references event(e_num)
+on delete set null);
+
+// e_user에 2명의 학생 입력하기
+insert into e_user values ('111','hong','남',33.33);
+insert into e_user values ('222','lee','녀',33.33);
+
+//// event에 2개의 이벤트 등록하기
+insert into event values ('e01','c강의','2024/09/09');
+insert into event values ('e02','html강의','2024/09/10');
+
+//이벤트 신청하기
+insert into event_join values('j01','111','e01','취업');
+insert into event_join values('j02','111','e02','취업');
+insert into event_join values('j03','222','e02','교양');
+
+//이벤트 중에 html강의 삭제하기
+delete from event where e_num = 'e02';
+
+//고객 아이디가 222인 사람 삭제하기
+delete from e_user where id='222';
+
+
+

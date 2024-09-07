@@ -1,0 +1,289 @@
+1. 테이블을 설계하기.
+
+시나리오1
+고객관리
+고객은 아이디와 이름, 성별, 포인트로 구성된다.
+아이디는 8글자이며, 중복된 아이디는 사용할 수 없다.
+이름은 한글로 최대 5글자 이며 성별은 남과 여로 저장한다.
+포인트는 최대 9999.99까지 저장할 수 있다.
+
+고객은 출석도장을 찍을 수 있다.
+출석도장은 날짜를 저장한다.
+고객은 하루에 여러번 출석도장을 찍을 수 있다. 
+---------
+고객관리
+테이블명 clinet
+컬럼     	id            name                 gender              point                      stamp    
+컬럼의미	아이디      이름                    성별                포인트                    출석도장
+속성	varchar2(8) varchar2(10)          varchar2(2)        number(6,2)              stamp date default sysdate
+제약조건                                        check '남', '녀'
+	8글자       한글로(최대5글자)   남,여                 최대 (9999.99까지)
+	primary key                               
+  	(중복금지)
+
+출석도장 테이블
+
+	client_stamp
+	stamp                id
+	출석도장             아이디
+속성	date                   varchar2(8)
+제약조건	default sysdate
+
+
+
+
+
+
+create table client (
+id varchar2(8) primary key,
+name varchar2(10),
+gender varchar2(2) check (gender in ('남', '녀')),
+point number(6,2));
+
+insert into client values ('aaaa', '고길동', '녀', 9999.99);
+insert into client values ('aaab', '도우너', '남', 123.99);
+
+
+// exexsexexe
+
+create table clientz (
+id varchar2(8) unique,
+name varchar2(10),
+gender varchar2(2) check (gender in ('남', '녀')),
+point number(6,2),
+stamp date default sysdate);
+
+insert into clientz values ('aaaa', '고길동', '녀', 9999.99, sysdate);
+
+
+
+//exexexexexs
+
+
+create table client_stamp (
+stamp date default sysdate,
+id varchar2(8),
+constraint fk_client_stamp foreign key(id) references client (id)); 
+
+insert into client_stamp values (sysdate, 'aaaa');
+insert into client_stamp values (sysdate, 'aaaa');
+
+
+
+
+
+시나리오2
+고객관리
+고객은 아이디와 이름, 성별, 포인트로 구성된다.
+아이디는 8글자이며, 중복된 아이디는 사용할 수 없다.
+이름은 한글로 최대 5글자 이며 성별은 남과 여로 저장한다.
+포인트는 최대 9999.99까지 저장할 수 있다.
+
+고객은 이벤트에 참여 할 수 있다. 
+이벤트는 별도의 테이블에 저장한다.
+이벤트 번호는 숫자3개의 조합이다. 
+이벤트 번호와 이벤트 이름과 날짜를 저장한다.
+
+고객만 이벤트에 참여 가능하고
+이벤트는 현재 계획된 이벤트만 신청이 가능하다.
+
+
+     제출방법 : 파워포인트
+     결과물 첨부 : 논리적설계(테이블명세서)
+                        물리적 설계(테이블 쿼리)
+                       증빙자료
+
+테이블명 		client_2
+칼럼       	id		name		point
+칼럼의미		아이디  		이름		포인트
+속성		varchar2(8),	varchar2(10),         number(6.2)	
+제약조건		primary key          (한글로최대5글자)   최대 9999.99
+		중복금지
+
+
+
+2024/07/08
+테이블명 		evet
+칼럼		evenn		eventname	eventdate        id
+칼럼의미	            이벤트번호	이벤트이름	이벤트날짜       아이디
+속성		number(3)	varchar2(20)	varchar2(10)      varchar2(8) foreign key           ---- 2024/08/08
+제약조건		숫자3개조합
+
++
+create table event_1 (
+evenn number(3),
+eventname varchar2(20),
+eventdate varchar2(20),
+id varchar2(8),
+constraint fk_client_event foreign key(id) references client (id));
+
+
+insert into event_1 values (001, '휴먼이벤트', '2024/09/27', 'aaaa');
+
+select * from event_1;
+
+
+
+2. 구축된 데이터 베이스 분석하기 
+    제출방법 : 1번부터 끝까지, 쿼리 실행 화면, 쿼리 결과 분석 내용을 1번 파워포인트 뒤에 첨부.
+
+create table stu(
+id varchar2(3),
+name varchar2(6),
+addr varchar2(6),
+primary key(id)
+);
+
+stu
+id               name        addr     primary key
+varchar2(3)  varchar2(6)
+
+
+
+create table sub(
+scode varchar2(3) primary key,
+sname varchar2(6),
+str varchar2(6)
+);
+
+---- 외래키 제약조건
+create table sugang(
+userid varchar2(3),
+subcode varchar2(3),
+constraint sugang_fk_userid  foreign key(userid) references stu(id)
+on delete set null,  //부모릴레이션에 참조하고 있는 id가 삭제되면 자식릴레이션 외래키 속성이 null
+constraint sugang_fk_subcode foreign key(subcode) references sub(scode)
+on delete cascade//부모릴레이션에 참조하고 있는 scode가 삭제되면 자식릴레이션 튜플도 삭제
+);
+
+문제
+다음 문제에 가능, 또는 불가능을 적으시고 불가능인 경우는 어떤 무결성 조건을 위배하는지.해결할 수 있는 방법을 서술
+1. aaa, 홍길동, 수원 이라는 학생이 등록하였다.
+2. bbb, 일지매, 서울 이라는 학생이 등록하였다.
+3. aaa, 아저씨, 대전 이라는 학생이 등록하였다.
+4. ccc, 오징어,서울특별시라는 학생이 등록하였다.
+
+5. c01, 오라클,김길수 라는 과목을 등록하시오.
+6. c02, 자바,김아무개라는 과목을 등록하시오.
+7. c02,객체언어, 홍길동 이라는 과목을 등록하시오.
+8. c03, html, 이길동 이라는 과목을 등록하시오.
+9. c04, js, 김자바라는 과목을 등록하시오.
+
+10. 아이디 aaa, 과목코드 c05를 등록하시오.
+11. 아이디 aaa, 과목코드 c01을 등록하시오.
+12. 아이다 aaa, 과목코드 c03을 등록하시오.
+13. 아이디 bbb, 과목코드 c01를 등록하시오
+
+14. 홍길동의 이름을 이길동으로 변경하시오.
+15. 오라클 선생님의 이름을 김오라로 변경하시오.
+16. bbb가 신청한 c01을 c04로 변경하시오.
+17. aaa가 신청한 html과목을 철회하시오.
+18. 홍길동 학생을 삭제하시고 수강신청 테이블을 확인하시오.
+19. 김자바 과목을 삭제하시고 수강신청 테이블을 확인하시오.
+20. 아이디 bbb, 과목코드 c01를 등록하시오
+
+
+
+
+create table sugang(
+userid varchar2(3),
+subcode varchar2(3),
+constraint sugang_fk_userid  foreign key(userid) references stu(id)
+on delete set null,
+constraint sugang_fk_subcode foreign key(subcode) references sub(scode)
+on delete cascade
+);
+
+
+1. aaa, 홍길동, 수원 이라는 학생이 등록하였다.
+insert into stu values ('aaa', '홍길동', '수원');
+가능
+
+2. bbb, 일지매, 서울 이라는 학생이 등록하였다.
+insert into stu values ('bbb', '일지매', '서울');
+가능
+
+3. aaa, 아저씨, 대전 이라는 학생이 등록하였다.
+insert into stu values ('aaa', '아저씨', '대전');
+불가능
+aaa가 유일성 위배
+
+4. ccc, 오징어,서울특별시라는 학생이 등록하였다.
+insert into stu values ('ccc', '오징어', '서울특별시');
+불가능
+addr이 varchar2(6), 한글 3글자까지만 표현가능,
+
+5. c01, 오라클,김길수 라는 과목을 등록하시오.
+insert into sub values ('c01', '오라클', '김길수');
+가능
+
+6. c02, 자바,김아무개라는 과목을 등록하시오.
+불가능
+str varchar2(6) 한글로 3글자까지 가능, 김아무개는 4글자
+
+7. c02,객체언어, 홍길동 이라는 과목을 등록하시오
+불가능
+sname varchar2(6), 한글로 3글자까지가능, 객체언어는 4글자
+
+8. c03, html, 이길동 이라는 과목을 등록하시오
+insert into sub values ('c03', 'html', '이길동');
+가능
+
+9. c04, js, 김자바라는 과목을 등록하시오.
+insert into sub values ('c04', 'js', '김자바');
+가능
+
+
+10. 아이디 aaa, 과목코드 c05를 등록하시오.
+불가능
+subcode 부모 릴레이션의 칼럼이 존재하지 않음
+
+11. 아이디 aaa, 과목코드 c01을 등록하시오.
+가능
+
+12. 아이다 aaa, 과목코드 c03을 등록하시오.
+가능
+insert into sugang values ('aaa', 'c03');
+
+13. 아이디 bbb, 과목코드 c01를 등록하시오
+insert into sugang values ('bbb', 'c01');
+가능
+
+
+14. 홍길동의 이름을 이길동으로 변경하시오.
+update stu set name= '이길동' where name = '홍길동';
+가능
+
+15. 오라클 선생님의 이름을 김오라로 변경하시오.
+update sub set str= '김오라' where str = '김길수';
+가능
+
+16. bbb가 신청한 c01을 c04로 변경하시오.
+가능
+update sugang set subcode= 'c04' where userid = 'bbb';
+
+17. aaa가 신청한 html과목을 철회하시오.
+user id aaa          subc03           - html
+//delete from sugang where subcode = 'c03' and  userid ='aaa';          row 삭제
+update sugang set subcode = '' where userid = 'aaa' and subcode ='c03';
+가능
+
+18. 홍길동 학생을 삭제하시고 수강신청 테이블을 확인하시오.
+불가능
+홍길동이 이길동으로 바뀌어서 없음 ;
+delete from stu where name ='홍길동';
+
+19. 김자바 과목을 삭제하시고 수강신청 테이블을 확인하시오.
+가능
+str 김자바
+delete from sub where str ='김자바';
+
+20. 아이디 bbb, 과목코드 c01를 등록하시오
+가능
+insert into sugang values ('bbb', 'c01');
+
+
+
+
+
+

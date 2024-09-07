@@ -1,0 +1,124 @@
+
+/* member 테이블 생성 */
+create table member(
+id varchar(15) primary key,
+password varchar(20) not null,
+m_name varchar(20) not null,
+m_tel varchar(13) not null,
+m_level int(2) default 3 check (m_level in (1,2,3)),
+m_perlevel decimal(10,1) check (m_perlevel in (0.8,0.9,1.0))
+);
+
+/* room 테이블 생성 */
+create table room(
+r_name varchar(6) primary key,
+r_price decimal(3,1) check(r_price in(1.0, 1.2, 1.5)),
+r_remain int(2) default 50
+);
+
+/* movie 테이블 생성 */
+create table movie(
+m_code int(3) primary key,
+m_name varchar(100) unique,
+m_genre varchar(10) not null,
+m_time varchar(10) not null,
+m_price int(10) not null
+);
+
+
+/* ticket 테이블 생성 */
+create table ticket(
+t_code varchar(6) primary key,
+id varchar(15),
+m_name varchar(100),
+s_time varchar(100),
+r_name varchar(10),
+t_number int(2),
+t_date timestamp,
+constraint fk_member_ticket foreign key(id) references member(id) on delete cascade,
+constraint fk_movie__ticket foreign key(m_name) references movie(m_name) on delete cascade,
+constraint fk_romm_ticket foreign key(r_name) references room(r_name)
+);
+
+
+/* review 테이블 생성 */
+create table review(
+rv_id varchar(6) primary key,
+id varchar(15),
+m_name varchar(100),
+r_title varchar(100) not null,
+r_text varchar(100000) not null,
+r_date timestamp not null,
+r_rate int(2) check (r_rate between 0 and 10),
+r_secret varchar(1) check(r_secret in('N','Y'),
+constraint fk_member_review foreign key(id) references member(id) on delete cascade on update cascade,
+constraint fk_movie__review foreign key(m_name) references movie(m_name)
+);
+
+
+/* comment 테이블 생성 */
+create table comment(
+c_code varchar(6) primary key,
+id varchar(15),
+rv_id varchar(6),
+c_text varchar(100000) not null,
+constraint fk_member_comment foreign key(id) references member(id),
+constraint fk_review_comment foreign key(rv_id) references review(rv_id)
+);
+
+
+
+
+
+
+
+
+
+//외래키 설정
+constraint fk_member_ticket foreign key(id) references member(id)
+
+/* c_order에 외래키 설정함 */
+alter table c_order
+add constraint fk_member_c_order
+foreign key(id)
+references member(id);
+
+//date 1998-08-09
+
+
+
+CREATE TRIGGER c_number
+AFTER INSERT ON ticket
+FOR EACH ROW
+BEGIN
+    -- r_remain이 감소한 값이 0 이하가 되는지 체크
+    DECLARE remaining INT;
+
+    -- 현재 남은 좌석 수를 가져옴
+    SELECT r_remain INTO remaining
+    FROM room
+    WHERE r_name = NEW.r_name;
+
+    -- 남은 좌석 수가 0 이하로 내려가는지 확인
+    IF remaining - NEW.t_number < 0 THEN
+        -- 경고 메시지 발생
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: 남은 좌석수가 부족합니다.';
+    ELSE
+        -- r_remain 값을 감소
+        UPDATE room
+        SET r_remain = r_remain - NEW.t_number
+        WHERE r_name = NEW.r_name;
+    END IF;
+END;
+
+
+
+//DECLARE remaining INT는 SQL 트리거 또는 저장 프로시저에서 변수를 선언하는 문장입니다. 이 변수는 프로시저나 트리거의 로컬 변수로서, 해당 블록 내에서만 사용할 수 있습니다.
+
+설명
+DECLARE: 변수나 커서, 조건 핸들러를 선언할 때 사용하는 SQL 키워드입니다. DECLARE 문은 저장 프로시저, 저장 함수, 트리거 등에서 사용됩니다.
+
+remaining: 선언할 변수의 이름입니다. 이 이름을 사용하여 이후 SQL 문에서 변수의 값을 참조하거나 수정할 수 있습니다.
+
+INT: 변수의 데이터 타입입니다. INT는 정수형 데이터를 저장하는 타입으로, 정수값을 표현할 수 있습니다.

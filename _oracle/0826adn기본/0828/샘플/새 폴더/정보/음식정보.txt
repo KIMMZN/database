@@ -1,0 +1,5 @@
+insert into food values ('f001','팝콘',5500);
+insert into food values ('f003','핫도그',6000);
+insert into food values ('f004','버터구이오징어',4500);
+insert into food values ('f010','나쵸',4500);
+insert into food values ('f011','프링글스',3000);

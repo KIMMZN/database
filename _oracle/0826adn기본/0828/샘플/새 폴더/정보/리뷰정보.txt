@@ -1,0 +1,6 @@
+insert into review values (1,'mango','애프터썬','2024-08-28','좋은 영화를 보고 나면 영화관을 나왔을 때 세상의 공기가 다르게 느껴진다');
+insert into review values (2,'mango','애프터썬','2024-08-28','오래된 캠코더 속 불안한 젊은 아빠와 혼란스러운 사춘기 딸의 이야기결국 그들이 필요했던 건 사랑');
+insert into review values (3,'cherry','필사의추격','2024-08-23','앞 좌석 할머님 웃음소리가 더 웃겼다');
+insert into review values (4,'grapefruit','혹성탈출:새로운시대','2024-05-16',' 1시간 반이면 끝낼 분량을 너무 늘렸다');
+insert into review values (5,'banana','빅토리','2024-08-26','기대없이 본 영화이지만 아름다웠던 내 학창시절이 생각나서 즐거웠다. 강추한다');
+insert into review values (6,'banana','빅토리','2024-08-26','영화보는 내내 신나고 응원받은 느낌이라 넘 좋았어요!');
