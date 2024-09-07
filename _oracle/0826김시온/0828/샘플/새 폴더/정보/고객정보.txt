@@ -1,5 +1,0 @@
-insert into customer values ('mango','김망고','010-1111-1111');
-insert into customer values ('banana','박나나','010-2222-2222');
-insert into customer values ('cherry','최리','010-3333-3333');
-insert into customer values ('grapefruit','리자몽','010-4444-4444');
-insert into customer values ('apple','천사과','010-5555-5555');

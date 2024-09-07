@@ -1,5 +1,0 @@
-insert into beverage values ('b001','제로콜라',2500);
-insert into beverage values ('b004','탄산수',1500);
-insert into beverage values ('b012','오렌지주스',3000);
-insert into beverage values ('b013','하늘보리',2500);
-insert into beverage values ('b015','생수',1000);
